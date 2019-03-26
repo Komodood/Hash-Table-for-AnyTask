@@ -18,8 +18,8 @@ namespace HashTableKmdd
     {
         class BothKeyValue
         {
-            public object key { get; set; }
-            public object value { get; set; }
+            public object Key { get; set; }
+            public object Value { get; set; }
         }
         List<List<BothKeyValue>> list;//Вроде тот самый типизированый список объектов
 
@@ -32,7 +32,7 @@ namespace HashTableKmdd
             list = new List<List<BothKeyValue>>();
             for (int i = 0; i < size; i++)
             {
-                list.Add(new List<BothKeyValue>());
+                list.Add(new List<BothKeyValue>());//создание таблицы нужного размера
             }
         }
         ///
@@ -40,35 +40,36 @@ namespace HashTableKmdd
         ///
         /// key">
         /// value">
-        public void PutPair(object key, object value)
+        public void PutBoth(object key, object value)
         {
-            var bucketNo = GetBucketNumber(key);
-            foreach (var p in list[bucketNo])
+            var HashInFirstList = Math.Abs(key.GetHashCode());
+            foreach (var hash in list[HashInFirstList])
             {
-                if (Equals(p.key, key))
+                if (Equals(hash.Key, key))
                 {
-                    p.value = value;
+                    hash.Value = value;
                     return;
                 }
+                list[HashInFirstList].Add(new BothKeyValue { Key = key, Value = value });
             }
-
-
         }
         /// <summary>
         /// Поиск значения по ключу
         /// summary>
-        /// key">Ключь
+        /// key">Ключ
         /// <returns>Значение, null если ключ отсутствует
         /// returns>
         public object GetValueByKey(object key)
         {
-
-
-
-        }
-        private int GetBucketNumber(object key)
-        {
-            return Math.Abs(key.GetHashCode()) & list.Count;
+            var HashInFirstList = Math.Abs(key.GetHashCode());
+            foreach (var hash in list[HashInFirstList])
+            {
+                if (Equals(hash.Key, key))
+                {
+                    return hash.Value;
+                }
+            }
+            return null;
         }
     }
 }
