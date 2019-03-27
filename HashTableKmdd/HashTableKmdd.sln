@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.438
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AnyTaskSORTING", "AnyTaskSORTING\AnyTaskSORTING.csproj", "{36AA1C39-1059-4359-8D61-D7432B186FF4}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HashTableKmdd", "HashTableKmdd\HashTableKmdd.csproj", "{2D5A5525-F446-4870-B4EC-44E5C75BCDA2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HashTableKmd", "HashTableKmdd\HashTableKmd.csproj", "{2D5A5525-F446-4870-B4EC-44E5C75BCDA2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
