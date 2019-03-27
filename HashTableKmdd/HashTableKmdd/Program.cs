@@ -6,68 +6,66 @@ using System.Threading.Tasks;
 
 namespace HashTableKmdd
 {
-    class Program
+    public class KeyValue
     {
-        static void Main(string[] args)
+        public object Key { get; private set; }
+        public object Value { get; private set; }
+        public KeyValue(object key, object value)
         {
-            Console.WriteLine("Hello World!");
+            Key = key;
+            Value = value;
+            if (Key is null)
+            {
+                throw new ArgumentNullException(nameof(key));
+            }
+
+            if (Value is null)
+            {
+                throw new ArgumentNullException(nameof(value));
+            }
         }
     }
-
     class HashTable
     {
-        class BothKeyValue
-        {
-            public object Key { get; set; }
-            public object Value { get; set; }
-        }
-        List<List<BothKeyValue>> list;//Вроде тот самый типизированый список объектов
-
+        readonly int Size;
+        readonly KeyValue[] Massive;
         /// <summary>
         /// Конструктор контейнера
         /// summary>
         /// size">Размер хэ-таблицы
         public HashTable(int size)
         {
-            list = new List<List<BothKeyValue>>();
-            for (int i = 0; i < size; i++)
-            {
-                list.Add(new List<BothKeyValue>());//создание таблицы нужного размера
-            }
+            Massive = new KeyValue[size];
+            Size = size;
         }
         ///
         /// Метод складывающий пару ключь-значение в таблицу
         ///
         /// key">
         /// value">
-        public void PutBoth(object key, object value)
+        public void PutPair(object key, object value)
         {
-            var HashInFirstList = Math.Abs(key.GetHashCode());
-            foreach (var hash in list[HashInFirstList])
-            {
-                if (Equals(hash.Key, key))
-                {
-                    hash.Value = value;
-                    return;
-                }
-                list[HashInFirstList].Add(new BothKeyValue { Key = key, Value = value });
-            }
+            var hash = key.GetHashCode();
+            var pos = hash % Size;  //Это что то вроде проверки ячейки на коллизию. Или как оно там. Нахождение места в таблице
+            for (; Massive[pos] != null; pos = (pos + 1) % Size)
+                if (Massive[pos].Key.Equals(key))
+                    break;
+            Massive[pos] = new KeyValue(key, value);
+            //var NewBucket = new KeyValue(key, value); СТРОЧКИ КОТОРЫЕ БЫЛИ В ПРОШЛОМ
+            //var OldBuckect = Massive[pos]; ВДРУГ ПОНАДОБЯТСЯ
+            //Жаль foreach не помог
         }
         /// <summary>
         /// Поиск значения по ключу
         /// summary>
-        /// key">Ключ
-        /// <returns>Значение, null если ключ отсутствует
-        /// returns>
+        /// key">Ключь
+        /// <returns>Значение, null если ключ отсутствуетreturns>
         public object GetValueByKey(object key)
         {
-            var HashInFirstList = Math.Abs(key.GetHashCode());
-            foreach (var hash in list[HashInFirstList])
+            foreach (var e in Massive)
             {
-                if (Equals(hash.Key, key))
-                {
-                    return hash.Value;
-                }
+                if (e.Key.Equals(key))
+                    return e.Value;
             }
             return null;
         }
