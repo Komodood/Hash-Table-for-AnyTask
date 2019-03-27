@@ -45,7 +45,7 @@ namespace HashTableKmdd
         /// value">
         public void PutPair(object key, object value)
         {
-            var hash = key.GetHashCode();
+            var hash = Math.Abs(key.GetHashCode());
             var pos = hash % Size;  //Это что то вроде проверки ячейки на коллизию. Или как оно там. Нахождение места в таблице
             for (; Massive[pos] != null; pos = (pos + 1) % Size)
                 if (Massive[pos].Key.Equals(key))

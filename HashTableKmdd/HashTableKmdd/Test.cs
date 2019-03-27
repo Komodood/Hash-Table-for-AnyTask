@@ -36,40 +36,26 @@ namespace HashTableKmdd
         [Test]
         public void TestMassive10000El()
         {
-            var h = new HashTable(10000);
-            for (int i = 1; i < 10000; i++)
+            var OverTable = new HashTable(10000);
+            for (int i = 0; i < 10000; i++)
             {
-                h.PutPair(i, i + 1);
+                OverTable.PutPair(i, i + 100);
             }
-            Assert.AreEqual(h.GetValueByKey(15), 16);
-            //var j = -1;
-            //var hashTable = new HashTable(10000);
-            //var rand = new Random();
-            //var massiveOfValue = new char[10000];
-            //for (int i = 0; i < 10000; i++)
-            //    massiveOfValue[i] = (char)rand.Next(0x00A1, 0x27B2);
-            //foreach (var e in massiveOfValue)
-            //{
-            //    hashTable.PutPair(j++, e);
-            //}
-            //hashTable.GetValueByKey(5000);
+            Assert.AreEqual(OverTable.GetValueByKey(15), 115);
         }
 
         [Test]
         public void TestMassive10000ElAnd1000()
         {
-            var j = 1002;
-            var hashTable = new HashTable(10000);
-            var rand = new Random();
-            var massiveOfValue = new char[10000];
+            var OverTable = new HashTable(10000);
             for (int i = 0; i < 10000; i++)
-                massiveOfValue[i] = (char)rand.Next(0x00A1, 0x27B2);
-            foreach (var e in massiveOfValue)
             {
-                hashTable.PutPair(j++, e);
+                OverTable.PutPair(i, i + 100);
             }
-            for (int k = 0; k < 1000; k++)
-                hashTable.GetValueByKey(k);
+            for (int i = 10000; i < 11000; i++)
+            {
+                Assert.AreEqual(OverTable.GetValueByKey(i), null);
+            }
         }
     }
 }
